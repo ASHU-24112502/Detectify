@@ -1,23 +1,40 @@
 package com.example.detectify.ui.theme
 
-import androidx.compose.material3.*
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Shapes
+import androidx.compose.material3.darkColorScheme
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.dp
 
-private val DarkColors = darkColorScheme(
-    primary = NeonCyan,
-    secondary = NeonMagenta,
-    background = BackgroundDark,
-    surface = SurfaceDark,
-    onPrimary = Color.Black,
-    onBackground = Color.White
+private val DetectifyColorScheme = darkColorScheme(
+    primary = ElectricCyan,
+    onPrimary = Midnight,
+    secondary = ElectricViolet,
+    onSecondary = Midnight,
+    tertiary = AuroraPink,
+    background = Midnight,
+    surface = DeepSpace,
+    onBackground = MistWhite,
+    onSurface = MistWhite,
+    outline = OutlineGlow,
+    outlineVariant = OutlineGlow
+)
+
+private val DetectifyShapes = Shapes(
+    small = androidx.compose.foundation.shape.RoundedCornerShape(12.dp),
+    medium = androidx.compose.foundation.shape.RoundedCornerShape(20.dp),
+    large = androidx.compose.foundation.shape.RoundedCornerShape(28.dp)
 )
 
 @Composable
-fun DetectifyTheme(content: @Composable () -> Unit) {
+fun DetectifyTheme(
+    content: @Composable () -> Unit
+) {
+    val colorScheme = DetectifyColorScheme
     MaterialTheme(
-        colorScheme = DarkColors,
-        typography = Typography(),
+        colorScheme = colorScheme,
+        typography = DetectifyTypography,
+        shapes = DetectifyShapes,
         content = content
     )
 }
