@@ -178,7 +178,7 @@ fun ScanScreen(onBack: () -> Unit) {
 ---------------------------------------------------- */
 private suspend fun sendToGemini(bitmap: Bitmap): String {
     val model = GenerativeModel(
-        modelName = "gemini-2.5-flash",
+        modelName = "gemini-2.0-flash",
         apiKey = BuildConfig.GEMINI_API_KEY
     )
 
