@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Detectify</string>
+    <string name="welcome">Bienvenue</string>
+    <string name="scan">Scan</string>
+    <string name="settings">Paramètres</string>
+    <string name="help">Aide</string>
+    <string name="logout">Déconnexion</string>
+</resources>

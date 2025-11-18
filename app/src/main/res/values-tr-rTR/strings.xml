@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Detectify</string>
+    <string name="welcome">Hoş geldiniz</string>
+    <string name="scan">Tarama</string>
+    <string name="settings">Ayarlar</string>
+    <string name="help">Yardım</string>
+    <string name="logout">Çıkış Yap</string>
+</resources>

@@ -11,56 +11,61 @@ import androidx.compose.material.icons.automirrored.filled.ArrowBack
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SettingScreen(onBack: () -> Unit) {
-
-    var dark by remember { mutableStateOf(true) }
+fun SettingsScreen(
+    onBack: () -> Unit
+) {
+    var expanded by remember { mutableStateOf(false) }
+    var selectedLanguage by remember { mutableStateOf("English") }
 
     Scaffold(
         topBar = {
-            TopAppBar(
+            CenterAlignedTopAppBar(
                 title = { Text("Settings") },
                 navigationIcon = {
                     IconButton(onClick = onBack) {
-                        Icon(
-                            imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                            contentDescription = "Back"
-                        )
+                        Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
                     }
                 }
             )
         }
     ) { padding ->
-
-        Box(
+        Column(
             modifier = Modifier
-                .fillMaxSize()
                 .padding(padding)
-                .padding(24.dp),
-            contentAlignment = Alignment.Center
+                .padding(20.dp)
+                .fillMaxSize()
         ) {
 
-            Column(
-                horizontalAlignment = Alignment.Start,
-                verticalArrangement = Arrangement.spacedBy(24.dp)
-            ) {
+            Text(
+                text = "Language",
+                style = MaterialTheme.typography.titleMedium,
+                modifier = Modifier.padding(bottom = 10.dp)
+            )
 
-                Text(
-                    "Preferences",
-                    style = MaterialTheme.typography.titleMedium
-                )
-
-                Row(
-                    verticalAlignment = Alignment.CenterVertically,
+            Box {
+                OutlinedButton(
+                    onClick = { expanded = true },
                     modifier = Modifier.fillMaxWidth()
                 ) {
-                    Text("Dark Theme", style = MaterialTheme.typography.bodyLarge)
-                    Spacer(Modifier.weight(1f))
-                    Switch(
-                        checked = dark,
-                        onCheckedChange = { dark = it }
-                    )
+                    Text(selectedLanguage)
                 }
 
+                DropdownMenu(
+                    expanded = expanded,
+                    onDismissRequest = { expanded = false }
+                ) {
+                    val languages = listOf("English", "French", "German", "Turkish")
+
+                    languages.forEach { lang ->
+                        DropdownMenuItem(
+                            text = { Text(lang) },
+                            onClick = {
+                                selectedLanguage = lang
+                                expanded = false
+                            }
+                        )
+                    }
+                }
             }
         }
     }

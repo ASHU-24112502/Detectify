@@ -56,7 +56,7 @@ fun HelpScreen(onBack: () -> Unit) {
                 Spacer(Modifier.height(16.dp))
 
                 Text(
-                    "If you face any issues, feel free to reach out:\n\nsupport@detectify.example",
+                    "If you face any issues, feel free to reach out:\n\nashish022502@gmail.com",
                     style = MaterialTheme.typography.bodyMedium
                 )
 
