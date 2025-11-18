@@ -133,7 +133,7 @@ fun HomeScreen(
                 text = "Hope you're doing well!",
                 fontSize = 18.sp,
                 color = Color.Gray,
-                fontWeight = FontWeight.Medium
+                fontWeight = FontWeight.Medium //Text view
             )
         }
     }
