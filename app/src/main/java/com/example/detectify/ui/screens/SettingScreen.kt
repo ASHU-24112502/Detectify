@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -42,8 +43,12 @@ import com.example.detectify.ui.components.GlassCard
 fun SettingsScreen(
     onBack: () -> Unit
 ) {
+    // dropdown menu visibility
     var expanded by remember { mutableStateOf(false) }
+    // selected language text
     var selectedLanguage by remember { mutableStateOf("English") }
+
+    // Switch states
     var voiceAssist by remember { mutableStateOf(true) }
     var haptics by remember { mutableStateOf(true) }
     var accessibilityHints by remember { mutableStateOf(false) }
@@ -51,21 +56,27 @@ fun SettingsScreen(
     DetectifyGradientBackground {
         Scaffold(
             modifier = Modifier.systemBarsPadding(),
-            containerColor = androidx.compose.ui.graphics.Color.Transparent,
+            containerColor = Color.Transparent,
+
+            // Top bar
             topBar = {
                 CenterAlignedTopAppBar(
                     title = { Text("Settings") },
                     navigationIcon = {
                         IconButton(onClick = onBack) {
-                            Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
+                            Icon(
+                                Icons.AutoMirrored.Filled.ArrowBack,
+                                contentDescription = "Back"
+                            )
                         }
                     },
                     colors = androidx.compose.material3.TopAppBarDefaults.centerAlignedTopAppBarColors(
-                        containerColor = androidx.compose.ui.graphics.Color.Transparent
+                        containerColor = Color.Transparent
                     )
                 )
             }
         ) { padding ->
+
             Column(
                 modifier = Modifier
                     .padding(padding)
@@ -73,16 +84,23 @@ fun SettingsScreen(
                     .fillMaxSize(),
                 verticalArrangement = Arrangement.spacedBy(20.dp)
             ) {
+
+                // LANGUAGE SELECTION CARD
                 GlassCard {
                     Column(verticalArrangement = Arrangement.spacedBy(16.dp)) {
+
                         Text("Language & input", style = MaterialTheme.typography.titleMedium)
+
                         Box {
+                            // Button that opens language dropdown
                             OutlinedButton(
                                 onClick = { expanded = true },
                                 modifier = Modifier.fillMaxWidth()
                             ) {
                                 Text(selectedLanguage)
                             }
+
+                            // Dropdown items
                             DropdownMenu(
                                 expanded = expanded,
                                 onDismissRequest = { expanded = false }
@@ -102,30 +120,50 @@ fun SettingsScreen(
                     }
                 }
 
+                // SWITCH PREFERENCE CARD
                 GlassCard {
                     Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
+
                         Text("Assistive preferences", style = MaterialTheme.typography.titleMedium)
-                        PreferenceRow("Voice guidance", "Spoken feedback after each scan", voiceAssist) {
-                            voiceAssist = it
-                        }
-                        PreferenceRow("Haptic confirmation", "Vibrate when scan finishes", haptics) {
-                            haptics = it
-                        }
-                        PreferenceRow("Accessibility hints", "Show contextual tips inside UI", accessibilityHints) {
-                            accessibilityHints = it
-                        }
+
+                        PreferenceRow(
+                            "Voice guidance",
+                            "Spoken feedback after each scan",
+                            voiceAssist
+                        ) { voiceAssist = it }
+
+                        PreferenceRow(
+                            "Haptic confirmation",
+                            "Vibrate when scan finishes",
+                            haptics
+                        ) { haptics = it }
+
+                        PreferenceRow(
+                            "Accessibility hints",
+                            "Show contextual tips inside UI",
+                            accessibilityHints
+                        ) { accessibilityHints = it }
                     }
                 }
 
+                // FIXED BOTTOM BOX — NOW TALLER SO ALL TEXT SHOWS
                 Surface(
                     shape = RoundedCornerShape(28.dp),
-                    color = MaterialTheme.colorScheme.surface.copy(alpha = 0.45f)
+                    color = MaterialTheme.colorScheme.surface.copy(alpha = 0.45f),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(top = 10.dp)
+                        .heightIn(min = 160.dp) // *** MAKES THE BOX BIGGER ***
                 ) {
-                    Column(modifier = Modifier.padding(20.dp)) {
+                    Column(
+                        modifier = Modifier
+                            .padding(20.dp) // Inner padding so text is not cut
+                    ) {
                         Text("Need to reset data?", style = MaterialTheme.typography.titleMedium)
                         Spacer(Modifier.height(8.dp))
                         Text(
-                            "Use the Help center if you need to clear cached scans or revoke permissions. Your account stays protected even if you sign out.",
+                            "Use the Help center if you need to clear cached scans or revoke permissions. " +
+                                    "Your account stays protected even if you sign out.",
                             style = MaterialTheme.typography.bodyMedium
                         )
                     }
@@ -136,7 +174,12 @@ fun SettingsScreen(
 }
 
 @Composable
-private fun PreferenceRow(title: String, subtitle: String, checked: Boolean, onToggle: (Boolean) -> Unit) {
+private fun PreferenceRow(
+    title: String,
+    subtitle: String,
+    checked: Boolean,
+    onToggle: (Boolean) -> Unit
+) {
     Row(
         modifier = Modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.SpaceBetween,
@@ -144,7 +187,11 @@ private fun PreferenceRow(title: String, subtitle: String, checked: Boolean, onT
     ) {
         Column(modifier = Modifier.weight(1f)) {
             Text(title, style = MaterialTheme.typography.bodyLarge)
-            Text(subtitle, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.8f))
+            Text(
+                subtitle,
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.8f)
+            )
         }
         Switch(checked = checked, onCheckedChange = onToggle)
     }
